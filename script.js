@@ -1,6 +1,8 @@
-const calculatorMain = document.querySelector("#calculatorMain");
-const calculatorDisplay = document.querySelector("#calculatorDisplay");
-const calculatorButtons = document.querySelector("#calculatorButtons");
+const calcMain = document.getElementById("#calcMain");
+const calcDisplay = document.querySelector("#calcDisplay");
+const calcButtons = document.querySelector("#calcButtons");
+const displayText = document.querySelector("#displayText");
+const numButton = document.querySelectorAll(".numButton");
 
 
 

@@ -1,5 +1,5 @@
-#calculatorMain {
-    background-color: cadetblue;
+#calcMain {
+    background-color: rgb(39, 184, 176);
     height: 400px;
     width: 300px;
     display: flexbox;
@@ -8,16 +8,16 @@
     top: 10px;
 }
 
-#calculatorDisplay {
+#calcDisplay {
     position: relative;
-    background-color: lightgray;
+    background-color: rgba(211, 211, 211, 0.651);
     height: 100px;
     margin: 0px 9px 9px 9px;
     top: 9px;
 }
 
-#calculatorButtons {
-    background-color: mistyrose;
+#calcButtons {
+    background-color: rgba(255, 199, 193, 0.822);
     position: relative;
     display: flexbox;
     flex-wrap: wrap;
@@ -38,19 +38,19 @@ button {
     background-color: palegreen;
 }
 
-.operatorButton {
+.opButton {
     background-color: paleturquoise;
-}
-
-#zero, #equals {
-    width: 96.5px;
 }
 
 #equals {
     background-color: royalblue;
 }
 
-#calculatorText {
+#clear {
+    background-color: rgba(65, 105, 225, 0.486);
+}
+
+#calcText {
     font-size: 48pt;
     position: relative;
     float: inline-end;
