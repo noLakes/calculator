@@ -1,0 +1,59 @@
+#calculatorMain {
+    background-color: cadetblue;
+    height: 400px;
+    width: 300px;
+    display: flexbox;
+    position: relative;
+    left: 481px;
+    top: 10px;
+}
+
+#calculatorDisplay {
+    position: relative;
+    background-color: lightgray;
+    height: 100px;
+    margin: 0px 9px 9px 9px;
+    top: 9px;
+}
+
+#calculatorButtons {
+    background-color: mistyrose;
+    position: relative;
+    display: flexbox;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: 0px 9px 9px 9px;
+    top: 9px;
+}
+
+button {
+    position: relative;
+    width: 61px;
+    margin: 5px 3px 5px 3px;
+    font-size: 20pt;
+    height: 58px
+}
+
+.numButton {
+    background-color: palegreen;
+}
+
+.operatorButton {
+    background-color: paleturquoise;
+}
+
+#zero, #equals {
+    width: 96.5px;
+}
+
+#equals {
+    background-color: royalblue;
+}
+
+#calculatorText {
+    font-size: 48pt;
+    position: relative;
+    float: inline-end;
+    top: 25%;
+    right: 10px;
+}
