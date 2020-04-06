@@ -34,6 +34,10 @@ button {
     height: 58px
 }
 
+button:hover {
+    background-color: yellow;
+}
+
 .numButton {
     background-color: palegreen;
 }
@@ -46,8 +50,16 @@ button {
     background-color: royalblue;
 }
 
+#equals:hover {
+    background-color: yellow;
+}
+
 #clear {
     background-color: rgba(65, 105, 225, 0.486);
+}
+
+#clear:hover {
+    background-color: yellow;
 }
 
 #calcText {
