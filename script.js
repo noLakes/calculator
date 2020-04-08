@@ -13,24 +13,6 @@ const calcButtons = document.querySelector("#calcButtons");
 
 const textContent = [];
 
-const args = [];
-
-let currentOperator = undefined;
-
-function addArgs(num) {
-    if (args.length == 1) {
-        args[1] = num;
-        operate(currentOperator);
-        
-    } else {
-        args[0] = num;
-    }
-}
-
-function clearArgs() {
-    args.length = 0;
-}
-
 function populateDisplay(numbers) {
     textContent.push(numbers);
     updateDisplay();
@@ -39,9 +21,6 @@ function populateDisplay(numbers) {
 function clearDisplay() {
     textContent.length = 0;
     updateDisplay();
-    if (args.length > 0){
-        clearArgs();
-    }
 }
 
 function updateDisplay() {
@@ -60,19 +39,13 @@ function mult() {
 function div() {
     return [...arguments].reduce((total, num) => total / num);
 }
-function operate(operator) {
-    let result = operator(Number(args[0]), Number(args[1]));
-    clearArgs();
-    clearDisplay();
-    addArgs(result);
-    populateDisplay(result);
 
 }
 function eventListeners() {
     
     for  (i = 0; i < numButton.length; i++) {
         numButton[i].addEventListener('click', function() {
-            populateDisplay(this.textContent);
+            
         });
     };
     
@@ -81,33 +54,24 @@ function eventListeners() {
     });
 
     addButton.addEventListener('click', function() {
-        currentOperator = add;
-        addArgs(textContent.join(''));
-        textContent.length = 0;
+
     });
 
     subButton.addEventListener('click', function() {
-        currentOperator = sub;
-        addArgs(textContent.join(''));
-        textContent.length = 0;
+
     });
 
     multiButton.addEventListener('click', function() {
-        currentOperator = mult;
-        addArgs(textContent.join(''));
-        textContent.length = 0;
+
     });
 
     divButton.addEventListener('click', function() {
-        currentOperator = div;
-        addArgs(textContent.join(''));
-        textContent.length = 0;
+
     });
     
     equalsButton.addEventListener('click', function() {
-        addArgs(textContent.join(''));
-        textContent.length = 0;
-    })
+
+    });
 } 
 eventListeners();
 
