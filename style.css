@@ -62,10 +62,16 @@ button:hover {
     background-color: yellow;
 }
 
-#calcText {
+#calcEquationText {
     font-size: 48pt;
     position: relative;
     float: inline-end;
     top: 25%;
     right: 10px;
+}
+
+#calcShadowText {
+    font-size: 12pt;
+    position: relative;
+    float: inline-start;
 }
