@@ -49,20 +49,16 @@ function updateDisplay() {
 }
 
 function add() {
-    let num = [...arguments];
-    return num.reduce((total, num) => total + num);
+    return [...arguments].reduce((total, num) => total + num);
 }
 function sub() {
-    let num = [...arguments];
-    return num.reduce((total, num) => total - num);
+    return [...arguments].reduce((total, num) => total - num);
 }
 function mult() {
-    let num = [...arguments];
-    return num.reduce((total, num) => total * num);
+    return [...arguments].reduce((total, num) => total * num);
 }
 function div() {
-    let num = [...arguments];
-    return num.reduce((total, num) => total / num);
+    return [...arguments].reduce((total, num) => total / num);
 }
 function operate(operator) {
     let result = operator(Number(args[0]), Number(args[1]));
