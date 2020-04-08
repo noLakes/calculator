@@ -1,6 +1,7 @@
 const calcMain = document.getElementById("#calcMain");
 const calcDisplay = document.querySelector("#calcDisplay");
-const displayText = document.querySelector("#calcText");
+const equationText = document.querySelector("#calcEquationText");
+const shadowText = document.querySelector("#calcShadowText");
 
 const calcButtons = document.querySelector("#calcButtons");
     const numButton = document.querySelectorAll(".numButton");
@@ -11,20 +12,30 @@ const calcButtons = document.querySelector("#calcButtons");
     const divButton = document.querySelector("#div");
     const equalsButton = document.querySelector("#equals");
 
-const textContent = [];
+const equationTextContent = [];
+const shadowTextContent = [];
 
-function populateDisplay(numbers) {
-    textContent.push(numbers);
+const logicStack = {
+    result: [],
+    equation: [],
+
+};
+
+function populateDisplay(text) {
+    equationTextContent.push(text);
+    logicStack.equation.push(text);
     updateDisplay();
 }
 
 function clearDisplay() {
-    textContent.length = 0;
+    equationTextContent.length = 0;
+    logicStack.equation.length = 0;
     updateDisplay();
 }
 
 function updateDisplay() {
-    displayText.textContent = textContent.join('');
+    equationText.textContent = equationTextContent.join('');
+    shadowText.textContent = shadowTextContent.join('');
 }
 
 function add() {
@@ -39,13 +50,11 @@ function mult() {
 function div() {
     return [...arguments].reduce((total, num) => total / num);
 }
-
-}
 function eventListeners() {
     
     for  (i = 0; i < numButton.length; i++) {
         numButton[i].addEventListener('click', function() {
-            
+            populateDisplay(this.textContent);
         });
     };
     
