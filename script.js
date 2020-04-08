@@ -1,7 +1,6 @@
 const calcMain = document.getElementById("#calcMain");
 const calcDisplay = document.querySelector("#calcDisplay");
 const displayText = document.querySelector("#calcText");
-const textContent = [];
 
 const calcButtons = document.querySelector("#calcButtons");
     const numButton = document.querySelectorAll(".numButton");
@@ -9,66 +8,69 @@ const calcButtons = document.querySelector("#calcButtons");
     const addButton = document.querySelector('#add');
     const subButton = document.querySelector('#subtract');
     const multiButton = document.querySelector("#multiply");
+    const divButton = document.querySelector("#div");
+    const equalsButton = document.querySelector("#equals");
 
-const argumentStack = {
-    operator: undefined,
-    
-    //should i have arguments added as keys, or exist in one key as a [array]?
-    addArguments: function(num) {
-        if ('arg1' in this) {
-            this['arg2'] = num;
-        } else {
-            this['arg1'] = num;
-        }
-    },
+const textContent = [];
 
-    operateArguments: function() {
+const args = [];
 
-    },
+let currentOperator = undefined;
 
-    clearArguments: function() {
+function addArgs(num) {
+    if (args.length == 1) {
+        args[1] = num;
+        operate(currentOperator);
+        
+    } else {
+        args[0] = num;
+    }
+}
 
-    },
-
-};
+function clearArgs() {
+    args.length = 0;
+}
 
 function populateDisplay(numbers) {
     textContent.push(numbers);
-    updateCalcText(textContent);
+    updateDisplay();
 }
 
 function clearDisplay() {
     textContent.length = 0;
-    updateCalcText(textContent);
+    updateDisplay();
+    if (args.length > 0){
+        clearArgs();
+    }
 }
 
-function updateCalcText(text) {
-    displayText.textContent = text.join('');
+function updateDisplay() {
+    displayText.textContent = textContent.join('');
 }
 
 function add() {
     let num = [...arguments];
     return num.reduce((total, num) => total + num);
 }
-
-addButton.addEventListener('click', function () {
-
-});
-
-function subtract() {
+function sub() {
     let num = [...arguments];
     return num.reduce((total, num) => total - num);
 }
-function multiply() {
+function mult() {
     let num = [...arguments];
     return num.reduce((total, num) => total * num);
 }
-function divide() {
+function div() {
     let num = [...arguments];
     return num.reduce((total, num) => total / num);
 }
-function operate(operator, num1, num2) {
-    return operator(num1, num2);
+function operate(operator) {
+    let result = operator(Number(args[0]), Number(args[1]));
+    clearArgs();
+    clearDisplay();
+    addArgs(result);
+    populateDisplay(result);
+
 }
 function eventListeners() {
     
@@ -81,5 +83,35 @@ function eventListeners() {
     clearButton.addEventListener('click', function () {
         clearDisplay();
     });
+
+    addButton.addEventListener('click', function() {
+        currentOperator = add;
+        addArgs(textContent.join(''));
+        textContent.length = 0;
+    });
+
+    subButton.addEventListener('click', function() {
+        currentOperator = sub;
+        addArgs(textContent.join(''));
+        textContent.length = 0;
+    });
+
+    multiButton.addEventListener('click', function() {
+        currentOperator = mult;
+        addArgs(textContent.join(''));
+        textContent.length = 0;
+    });
+
+    divButton.addEventListener('click', function() {
+        currentOperator = div;
+        addArgs(textContent.join(''));
+        textContent.length = 0;
+    });
+    
+    equalsButton.addEventListener('click', function() {
+        addArgs(textContent.join(''));
+        textContent.length = 0;
+    })
 } 
 eventListeners();
+
