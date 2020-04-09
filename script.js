@@ -17,44 +17,58 @@ const shadowTextContent = [];
 
 const logicStack = {
     result: [],
-    equation: [],
-
+    equationFull: [],
+    equationBuild: [],
+    newNumbers: [],
 };
+const ls = logicStack;
 
-function populateDisplay(text) {
-    equationTextContent.push(text);
-    logicStack.equation.push(text);
+function operate() {
+
+    }
+    
+function addNum(num) {
+    //addnum code
+    updateDisplay();
+}
+
+function addOp(op) {
+//addOp code
     updateDisplay();
 }
 
 function clearDisplay() {
-    equationTextContent.length = 0;
-    logicStack.equation.length = 0;
+//clearDisplay code
     updateDisplay();
 }
 
 function updateDisplay() {
     equationText.textContent = equationTextContent.join('');
-    shadowText.textContent = shadowTextContent.join('');
 }
 
-function add() {
-    return [...arguments].reduce((total, num) => total + num);
+const mathOp = {
+    '+': function() {
+        return [...arguments].reduce((total, num) => total + num);
+    },
+
+    '-': function() {
+        return [...arguments].reduce((total, num) => total - num);
+    },
+
+    '*': function() {
+        return [...arguments].reduce((total, num) => total * num);
+    },
+
+    '/': function() {
+        return [...arguments].reduce((total, num) => total / num);
+    },
 }
-function sub() {
-    return [...arguments].reduce((total, num) => total - num);
-}
-function mult() {
-    return [...arguments].reduce((total, num) => total * num);
-}
-function div() {
-    return [...arguments].reduce((total, num) => total / num);
-}
+
 function eventListeners() {
     
     for  (i = 0; i < numButton.length; i++) {
         numButton[i].addEventListener('click', function() {
-            populateDisplay(this.textContent);
+            addNum(this.textContent);
         });
     };
     
@@ -63,19 +77,19 @@ function eventListeners() {
     });
 
     addButton.addEventListener('click', function() {
-
+        addOp(this.textContent);
     });
 
     subButton.addEventListener('click', function() {
-
+        addOp(this.textContent);
     });
 
     multiButton.addEventListener('click', function() {
-
+        addOp(this.textContent);
     });
 
     divButton.addEventListener('click', function() {
-
+        addOp(this.textContent);
     });
     
     equalsButton.addEventListener('click', function() {
