@@ -1,0 +1,9 @@
+bugs to fix:
+    allow '-' to indicate negative
+    prevent / 0 form = infinity
+    prevent equations with incorrect amt operators/numbers from crashing
+
+features to add:
+    shadow result (predicitve result)
+    backspace key
+    better css styling 
