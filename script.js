@@ -24,27 +24,33 @@ const logicStack = {
 const ls = logicStack;
 
 function operate() {
-    while (ls.equationBuild.includes('*')) {
-        let pos = ls.equationBuild.indexOf('*');
-        ls.equationBuild.splice(pos-1, 3, mathOp['*'](ls.equationBuild[pos-1], ls.equationBuild[pos+1]));
-        console.log(ls.equationBuild);
+    while (ls.equationBuild.includes('*') || ls.equationBuild.includes('/')) {
+        ls.equationBuild.forEach(function (item, pos) {
+            if (item == '*') {
+                ls.equationBuild.splice(pos-1, 3, mathOp['*'](ls.equationBuild[pos-1], ls.equationBuild[pos+1]));
+                console.log(ls.equationBuild);
+            }
+            else if (item == '/') {
+            ls.equationBuild.splice(pos-1, 3, mathOp['/'](ls.equationBuild[pos-1], ls.equationBuild[pos+1]));
+            console.log(ls.equationBuild);
+            }
+        });
     }
-    while (ls.equationBuild.includes('/')) {
-        let pos = ls.equationBuild.indexOf('/');
-        ls.equationBuild.splice(pos-1, 3, mathOp['/'](ls.equationBuild[pos-1], ls.equationBuild[pos+1]));
-        console.log(ls.equationBuild);
+    while (ls.equationBuild.includes('+') || ls.equationBuild.includes('-')) {
+        ls.equationBuild.forEach(function (item, pos) {
+            if (item == '+') {
+                ls.equationBuild.splice(pos-1, 3, mathOp['+'](ls.equationBuild[pos-1], ls.equationBuild[pos+1]));
+                console.log(ls.equationBuild);
+            }
+            else if (item == '-') {
+            ls.equationBuild.splice(pos-1, 3, mathOp['-'](ls.equationBuild[pos-1], ls.equationBuild[pos+1]));
+            console.log(ls.equationBuild);
+            }
+        });
     }
-    while (ls.equationBuild.includes('+')) {
-        let pos = ls.equationBuild.indexOf('+');
-        ls.equationBuild.splice(pos-1, 3, mathOp['+'](ls.equationBuild[pos-1], ls.equationBuild[pos+1]));
-        console.log(ls.equationBuild);
-    }
-    while (ls.equationBuild.includes('-')) {
-        let pos = ls.equationBuild.indexOf('-');
-        ls.equationBuild.splice(pos-1, 3, mathOp['-'](ls.equationBuild[pos-1], ls.equationBuild[pos+1]));
-        console.log(ls.equationBuild);
-    }
-    console.log(ls.equationBuild);
+    equationTextContent.length = 0;
+    equationTextContent.push(ls.equationBuild.join(''));
+    updateDisplay();
     }
     
 function addNum(num) {
@@ -54,7 +60,9 @@ function addNum(num) {
 }
 
 function addOp(op) {
-    ls.equationBuild.push(Number(ls.newNumbers.join('')));
+    if (ls.newNumbers.length > 0) {
+        ls.equationBuild.push(Number(ls.newNumbers.join('')));
+    }
     ls.newNumbers.length = 0;
     ls.equationBuild.push(op);
     equationTextContent.push(op);
@@ -62,16 +70,16 @@ function addOp(op) {
 }
 
 function equals() {
-    ls.equationBuild.push(newNumbers.join(''));
+    ls.equationBuild.push(Number(ls.newNumbers.join('')));
     ls.newNumbers.length = 0;
-
-    updateDisplay();
-
-
+    operate();
 }
 
 function clearDisplay() {
-//clearDisplay code
+    equationTextContent.length = 0;
+    ls.result.length = 0;
+    ls.equationBuild.length = 0;
+    ls.newNumbers.length = 0;
     updateDisplay();
 }
 
@@ -126,7 +134,7 @@ function eventListeners() {
     });
     
     equalsButton.addEventListener('click', function() {
-
+        equals();
     });
 } 
 eventListeners();
