@@ -7,3 +7,6 @@ features to add:
     shadow result (predicitve result)
     backspace key
     better css styling 
+    decimal button (disable to prevent consecutive in same number)
+    round to 2dp
+    keyboard support
