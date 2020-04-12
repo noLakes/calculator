@@ -24,6 +24,7 @@ const logicStack = {
 const ls = logicStack;
 
 function operate() {
+    
     while (ls.equationBuild.includes('*') || ls.equationBuild.includes('/')) {
         ls.equationBuild.forEach(function (item, pos) {
             if (item == '*') {
@@ -48,9 +49,16 @@ function operate() {
             }
         });
     }
-    equationTextContent.length = 0;
-    equationTextContent.push(ls.equationBuild.join(''));
-    updateDisplay();
+    if (ls.equationBuild.includes(Infinity)) {
+        clearDisplay();
+        equationTextContent.push('err: div by 0');
+        updateDisplay();
+    } else {
+        equationTextContent.length = 0;
+        equationTextContent.push(ls.equationBuild.join(''));
+        updateDisplay();
+    }
+    
     }
     
 function addNum(num) {
@@ -62,6 +70,12 @@ function addNum(num) {
 function addOp(op) {
     if (ls.newNumbers.length > 0) {
         ls.equationBuild.push(Number(ls.newNumbers.join('')));
+    } 
+    else if (ls.newNumbers.length == 0 && op == '-') { 
+        ls.newNumbers.push(op);
+        equationTextContent.push(op);
+        updateDisplay();
+        return;
     }
     ls.newNumbers.length = 0;
     ls.equationBuild.push(op);
@@ -70,7 +84,9 @@ function addOp(op) {
 }
 
 function equals() {
-    ls.equationBuild.push(Number(ls.newNumbers.join('')));
+    if (ls.newNumbers.length > 0) {
+        ls.equationBuild.push(Number(ls.newNumbers.join('')));
+    }  
     ls.newNumbers.length = 0;
     operate();
 }
@@ -85,6 +101,10 @@ function clearDisplay() {
 
 function updateDisplay() {
     equationText.textContent = equationTextContent.join('');
+}
+
+function buttonDisable() {
+
 }
 
 const mathOp = {

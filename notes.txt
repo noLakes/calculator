@@ -1,6 +1,6 @@
 bugs to fix:
-    allow '-' to indicate negative
-    prevent / 0 form = infinity
+    [done] allow '-' to indicate negative
+    [done] prevent / 0 form = infinity 
     prevent equations with incorrect amt operators/numbers from crashing
 
 features to add:
