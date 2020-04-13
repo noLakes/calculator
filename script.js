@@ -59,11 +59,12 @@ function operate() {
         updateDisplay();
     }
     
-    }
-    
+}
+
 function addNum(num) {
     ls.newNumbers.push(num);
     equationTextContent.push(num);
+    buttonEnable();
     updateDisplay();
 }
 
@@ -75,8 +76,12 @@ function addOp(op) {
         ls.newNumbers.push(op);
         equationTextContent.push(op);
         updateDisplay();
+        if (divButton.disabled == true || addButton.disabled == true || multiButton.disabled == true) {
+            subButton.disabled = true;
+        }
         return;
     }
+    buttonDisable();
     ls.newNumbers.length = 0;
     ls.equationBuild.push(op);
     equationTextContent.push(op);
@@ -88,6 +93,7 @@ function equals() {
         ls.equationBuild.push(Number(ls.newNumbers.join('')));
     }  
     ls.newNumbers.length = 0;
+    buttonEnable();
     operate();
 }
 
@@ -96,6 +102,7 @@ function clearDisplay() {
     ls.result.length = 0;
     ls.equationBuild.length = 0;
     ls.newNumbers.length = 0;
+    buttonEnable();
     updateDisplay();
 }
 
@@ -104,7 +111,15 @@ function updateDisplay() {
 }
 
 function buttonDisable() {
-
+    divButton.disabled = true;
+    multiButton.disabled = true;
+    addButton.disabled = true;    
+}
+function buttonEnable() {
+    divButton.disabled = false;
+    multiButton.disabled = false;
+    addButton.disabled = false;    
+    subButton.disabled = false;
 }
 
 const mathOp = {

@@ -1,7 +1,7 @@
 bugs to fix:
     [done] allow '-' to indicate negative
     [done] prevent / 0 form = infinity 
-    prevent equations with incorrect amt operators/numbers from crashing
+    [done] prevent equations with incorrect amt operators/numbers from crashing (add button toggles)
 
 features to add:
     shadow result (predicitve result)
