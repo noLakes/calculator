@@ -6,11 +6,13 @@ const shadowText = document.querySelector("#calcShadowText");
 const calcButtons = document.querySelector("#calcButtons");
     const numButton = document.querySelectorAll(".numButton");
     const clearButton = document.querySelector("#clear");
+    const decimalButton = document.querySelector("#decimal");
     const addButton = document.querySelector('#add');
     const subButton = document.querySelector('#subtract');
     const multiButton = document.querySelector("#multiply");
     const divButton = document.querySelector("#div");
     const equalsButton = document.querySelector("#equals");
+    const deleteButton = document.querySelector("#delete");
 
 const equationTextContent = [];
 const shadowTextContent = [];
@@ -97,6 +99,12 @@ function equals() {
     operate();
 }
 
+function del() {
+    ls.newNumbers.pop();
+    equationTextContent.pop();
+    updateDisplay();
+}
+
 function clearDisplay() {
     equationTextContent.length = 0;
     ls.result.length = 0;
@@ -120,6 +128,9 @@ function buttonEnable() {
     multiButton.disabled = false;
     addButton.disabled = false;    
     subButton.disabled = false;
+    if (!(ls.newNumbers.includes('.'))) {
+        decimalButton.disabled = false;
+    }
 }
 
 const mathOp = {
@@ -166,6 +177,15 @@ function eventListeners() {
 
     divButton.addEventListener('click', function() {
         addOp(this.textContent);
+    });
+
+    decimalButton.addEventListener('click', function() {
+        addNum(this.textContent);
+        this.disabled = true;
+    });
+
+    deleteButton.addEventListener('click', function() {
+        del();
     });
     
     equalsButton.addEventListener('click', function() {
