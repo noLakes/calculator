@@ -2,7 +2,6 @@ const calcMain = document.getElementById("#calcMain");
 const calcDisplay = document.querySelector("#calcDisplay");
 const equationText = document.querySelector("#calcEquationText");
 const shadowText = document.querySelector("#calcShadowText");
-
 const calcButtons = document.querySelector("#calcButtons");
     const numButton = document.querySelectorAll(".numButton");
     const clearButton = document.querySelector("#clear");
@@ -15,13 +14,12 @@ const calcButtons = document.querySelector("#calcButtons");
     const deleteButton = document.querySelector("#delete");
 
 const equationTextContent = [];
-const shadowTextContent = [];
-
 const logicStack = {
-    result: [],
-    equationFull: [],
     equationBuild: [],
     newNumbers: [],
+    lastIndex: function() {
+        return ls.equationBuild[ls.equationBuild.length-1];
+    },
 };
 const ls = logicStack;
 
@@ -51,9 +49,9 @@ function operate() {
             }
         });
     }
-    if (ls.equationBuild.includes(Infinity)) {
+    if (ls.equationBuild.includes("Infinity") || ls.equationBuild.includes("NaN")) {
         clearDisplay();
-        equationTextContent.push('err: div by 0');
+        equationTextContent.push('infinity!');
         updateDisplay();
     } else {
         equationTextContent.length = 0;
@@ -71,8 +69,8 @@ function addNum(num) {
 }
 
 function addOp(op) {
-    if (ls.equationBuild.length > 0 && typeof(ls.equationBuild[ls.equationBuild.length-1]) == 'object') {
-        ls.newNumbers.unshift(...ls.equationBuild[ls.equationBuild.length-1]);
+    if (ls.equationBuild.length > 0 && typeof(ls.lastIndex()) == 'object') {
+        ls.newNumbers.unshift(...ls.lastIndex());
         ls.equationBuild.length = ls.equationBuild.length -1;
     }
     if (ls.newNumbers.length > 0) {
@@ -95,8 +93,8 @@ function addOp(op) {
 }
 
 function equals() {
-    if (ls.equationBuild.length > 0 && typeof(ls.equationBuild[ls.equationBuild.length-1]) == 'object') {
-        ls.newNumbers.unshift(...ls.equationBuild[ls.equationBuild.length-1]);
+    if (ls.equationBuild.length > 0 && typeof(ls.lastIndex()) == 'object') {
+        ls.newNumbers.unshift(...ls.lastIndex());
         ls.equationBuild.length = ls.equationBuild.length -1;
     }
     if (ls.newNumbers.length > 0) {
@@ -130,6 +128,7 @@ function del() {
     }
     equationTextContent.pop();
     updateDisplay();
+    buttonEnable();
     
     console.log(ls.equationBuild);
     console.log(equationTextContent);
@@ -137,7 +136,6 @@ function del() {
 
 function clearDisplay() {
     equationTextContent.length = 0;
-    ls.result.length = 0;
     ls.equationBuild.length = 0;
     ls.newNumbers.length = 0;
     buttonEnable();

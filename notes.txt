@@ -1,12 +1,10 @@
-bugs to fix:
-    [done] allow '-' to indicate negative
-    [done] prevent / 0 form = infinity 
-    [done] prevent equations with incorrect amt operators/numbers from crashing (add button toggles)
+bugs to fix:   
+    del causing operators to reset when they shouldnt; could fix with isOperator()? function that checks what the last
+    item is before resetting certain buttons
+
+    deleting operator does not allow new numbers to be added to previous set of numbers
 
 features to add:
     shadow result (predicitve result)
-    [bug] backspace key
     better css styling 
-    [done] decimal button (disable to prevent consecutive in same number)
-    [done] round to 2dp
     keyboard support
