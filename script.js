@@ -100,9 +100,26 @@ function equals() {
 }
 
 function del() {
-    ls.newNumbers.pop();
+    if (ls.newNumbers.length > 0) {
+        ls.newNumbers.pop();
+    } else if (ls.equationBuild.length > 0 && isNaN(ls.equationBuild[ls.equationBuild.length -1])) {   
+        ls.equationBuild.pop();
+    } else if (ls.equationBuild.length > 0 && !isNaN(ls.equationBuild[ls.equationBuild.length -1])) {
+        ls.equationBuild[ls.equationBuild.length-1] = Array.from(String(ls.equationBuild[ls.equationBuild.length -1]));
+        ls.equationBuild[ls.equationBuild.length-1].length = ls.equationBuild[ls.equationBuild.length-1].length - 1;
+        if (ls.equationBuild[ls.equationBuild.length-1].length == 0) {
+            ls.equationBuild.length = ls.equationBuild.length -1;
+        } else {
+            ls.equationBuild[ls.equationBuild.length-1] = Number(ls.equationBuild[ls.equationBuild.length-1].join(''));
+        }
+    }
     equationTextContent.pop();
+    if (equationTextContent[equationTextContent.length -1] == '.') {
+        equationTextContent.pop();
+    }
     updateDisplay();
+    console.log(ls.equationBuild);
+    console.log(equationTextContent);
 }
 
 function clearDisplay() {
@@ -133,21 +150,25 @@ function buttonEnable() {
     }
 }
 
+function roundToTwo(num) {    
+    return +(Math.round(num + "e+2")  + "e-2");
+}
+
 const mathOp = {
     '+': function() {
-        return [...arguments].reduce((total, num) => total + num);
+        return roundToTwo([...arguments].reduce((total, num) => total + num));
     },
 
     '-': function() {
-        return [...arguments].reduce((total, num) => total - num);
+        return roundToTwo([...arguments].reduce((total, num) => total - num));
     },
 
     '*': function() {
-        return [...arguments].reduce((total, num) => total * num);
+        return roundToTwo([...arguments].reduce((total, num) => total * num));
     },
 
     '/': function() {
-        return [...arguments].reduce((total, num) => total / num);
+        return roundToTwo([...arguments].reduce((total, num) => total / num));
     },
 }
 

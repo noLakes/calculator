@@ -8,5 +8,5 @@ features to add:
     [bug] backspace key
     better css styling 
     [done] decimal button (disable to prevent consecutive in same number)
-    round to 2dp
+    [done] round to 2dp
     keyboard support
