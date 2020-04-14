@@ -57,7 +57,7 @@ function operate() {
         updateDisplay();
     } else {
         equationTextContent.length = 0;
-        equationTextContent.push(ls.equationBuild.join(''));
+        equationTextContent.push(...ls.equationBuild.join(''));
         updateDisplay();
     }
     
@@ -71,8 +71,12 @@ function addNum(num) {
 }
 
 function addOp(op) {
+    if (ls.equationBuild.length > 0 && typeof(ls.equationBuild[ls.equationBuild.length-1]) == 'object') {
+        ls.newNumbers.unshift(...ls.equationBuild[ls.equationBuild.length-1]);
+        ls.equationBuild.length = ls.equationBuild.length -1;
+    }
     if (ls.newNumbers.length > 0) {
-        ls.equationBuild.push(Number(ls.newNumbers.join('')));
+        ls.equationBuild.push(ls.newNumbers.join(''));
     } 
     else if (ls.newNumbers.length == 0 && op == '-') { 
         ls.newNumbers.push(op);
@@ -91,8 +95,12 @@ function addOp(op) {
 }
 
 function equals() {
+    if (ls.equationBuild.length > 0 && typeof(ls.equationBuild[ls.equationBuild.length-1]) == 'object') {
+        ls.newNumbers.unshift(...ls.equationBuild[ls.equationBuild.length-1]);
+        ls.equationBuild.length = ls.equationBuild.length -1;
+    }
     if (ls.newNumbers.length > 0) {
-        ls.equationBuild.push(Number(ls.newNumbers.join('')));
+        ls.equationBuild.push((ls.newNumbers.join('')));
     }  
     ls.newNumbers.length = 0;
     buttonEnable();
@@ -102,22 +110,27 @@ function equals() {
 function del() {
     if (ls.newNumbers.length > 0) {
         ls.newNumbers.pop();
-    } else if (ls.equationBuild.length > 0 && isNaN(ls.equationBuild[ls.equationBuild.length -1])) {   
-        ls.equationBuild.pop();
-    } else if (ls.equationBuild.length > 0 && !isNaN(ls.equationBuild[ls.equationBuild.length -1])) {
-        ls.equationBuild[ls.equationBuild.length-1] = Array.from(String(ls.equationBuild[ls.equationBuild.length -1]));
-        ls.equationBuild[ls.equationBuild.length-1].length = ls.equationBuild[ls.equationBuild.length-1].length - 1;
-        if (ls.equationBuild[ls.equationBuild.length-1].length == 0) {
-            ls.equationBuild.length = ls.equationBuild.length -1;
+    } else if (ls.equationBuild.length > 0) {
+        let x = ls.equationBuild.length -1;
+        
+        if (typeof(ls.equationBuild[x]) == 'object') {
+            ls.equationBuild[x].pop();
+        }
+        else if (isNaN(ls.equationBuild[x])) {
+            ls.equationBuild.pop();
         } else {
-            ls.equationBuild[ls.equationBuild.length-1] = Number(ls.equationBuild[ls.equationBuild.length-1].join(''));
+             ls.equationBuild[x] = Array.from(String(ls.equationBuild[x]));
+             ls.equationBuild[x].pop();
+             if (ls.equationBuild[x].length == 0) {
+                 ls.equationBuild.length = ls.equationBuild.length -1;
+             } else {
+                ls.equationBuild[x].join('');
+             }
         }
     }
     equationTextContent.pop();
-    if (equationTextContent[equationTextContent.length -1] == '.') {
-        equationTextContent.pop();
-    }
     updateDisplay();
+    
     console.log(ls.equationBuild);
     console.log(equationTextContent);
 }
@@ -156,20 +169,30 @@ function roundToTwo(num) {
 
 const mathOp = {
     '+': function() {
-        return roundToTwo([...arguments].reduce((total, num) => total + num));
+        return String(roundToTwo(this.stringHandler(...arguments).reduce((total, num) => total + num)));
     },
 
     '-': function() {
-        return roundToTwo([...arguments].reduce((total, num) => total - num));
+        return String(roundToTwo(this.stringHandler(...arguments).reduce((total, num) => total - num)));
     },
 
     '*': function() {
-        return roundToTwo([...arguments].reduce((total, num) => total * num));
+        return String(roundToTwo(this.stringHandler(...arguments).reduce((total, num) => total * num)));
     },
 
     '/': function() {
-        return roundToTwo([...arguments].reduce((total, num) => total / num));
+        return String(roundToTwo(this.stringHandler(...arguments).reduce((total, num) => total / num)));
     },
+
+    stringHandler: function() {
+        let x = [...arguments];
+        return x.map(function(num) {
+            if (typeof(num) == 'string') {
+                return Number(num);
+            } else {return num};
+        })
+    },
+    
 }
 
 function eventListeners() {
