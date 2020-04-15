@@ -80,7 +80,7 @@ function addOp(op) {
     if (ls.newNumbers.length > 0) {
         ls.equationBuild.push(ls.newNumbers.join(''));
     } 
-    else if (ls.newNumbers.length == 0 && op == '-') { 
+    else if (ls.newNumbers.length == 0 && isOperator(ls.lastIndex())) { 
         ls.newNumbers.push(op);
         equationTextContent.push(op);
         updateDisplay();
@@ -167,6 +167,10 @@ function buttonEnable() {
 
 function roundToTwo(num) {    
     return +(Math.round(num + "e+2")  + "e-2");
+}
+
+function isOperator(test) {
+    return (test == '+' || test == '-' || test == '/' || test == '*' || test == '%');
 }
 
 const mathOp = {
