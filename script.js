@@ -1,7 +1,6 @@
 const calcMain = document.getElementById("#calcMain");
 const calcDisplay = document.querySelector("#calcDisplay");
 const equationText = document.querySelector("#calcEquationText");
-const shadowText = document.querySelector("#calcShadowText");
 const calcButtons = document.querySelector("#calcButtons");
     const numButton = document.querySelectorAll(".numButton");
     const clearButton = document.querySelector("#clear");
@@ -12,6 +11,7 @@ const calcButtons = document.querySelector("#calcButtons");
     const divButton = document.querySelector("#div");
     const equalsButton = document.querySelector("#equals");
     const deleteButton = document.querySelector("#delete");
+    const percentButton = document.querySelector("#percent");
 
 const equationTextContent = [];
 const logicStack = {
@@ -25,7 +25,7 @@ const ls = logicStack;
 
 function operate() {
     
-    while (ls.equationBuild.includes('*') || ls.equationBuild.includes('/')) {
+    while (ls.equationBuild.includes('*') || ls.equationBuild.includes('/') || ls.equationBuild.includes('%')) {
         ls.equationBuild.forEach(function (item, pos) {
             if (item == '*') {
                 ls.equationBuild.splice(pos-1, 3, mathOp['*'](ls.equationBuild[pos-1], ls.equationBuild[pos+1]));
@@ -34,6 +34,10 @@ function operate() {
             else if (item == '/') {
             ls.equationBuild.splice(pos-1, 3, mathOp['/'](ls.equationBuild[pos-1], ls.equationBuild[pos+1]));
             console.log(ls.equationBuild);
+            }
+            else if (item == '%') {
+                ls.equationBuild.splice(pos-1, 3, mathOp['%'](ls.equationBuild[pos-1], ls.equationBuild[pos+1]));
+                console.log(ls.equationBuild);
             }
         });
     }
@@ -182,6 +186,11 @@ const mathOp = {
         return String(roundToTwo(this.stringHandler(...arguments).reduce((total, num) => total / num)));
     },
 
+    '%': function(x, y) {
+        let nums = this.stringHandler(x,y);
+        return String(roundToTwo((x/100) * y));
+    },
+
     stringHandler: function() {
         let x = [...arguments];
         return x.map(function(num) {
@@ -232,6 +241,10 @@ function eventListeners() {
     
     equalsButton.addEventListener('click', function() {
         equals();
+    });
+
+    percentButton.addEventListener('click', function() {
+        addOp(this.textContent);
     });
 } 
 eventListeners();

@@ -6,5 +6,4 @@ bugs to fix:
 
 features to add:
     shadow result (predicitve result)
-    better css styling 
     keyboard support
